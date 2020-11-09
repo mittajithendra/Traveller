@@ -4,8 +4,10 @@ const homeController = require('../controllers/home/home');
 const formFileUpload = require('../controllers/FormController/upload');
 const placeUpload = require('../controllers/FormController/addPlace');
 const StatesData = require('../controllers/StaticApiData/apiStatesController');
+const DistrictsData = require('../controllers/StaticApiData/apidistrictsController');
 
 let routes = app => {
+  
     router.get("/", homeController.getHome);
 
     router.get("/addPlace",placeUpload.addPlace);
@@ -13,6 +15,8 @@ let routes = app => {
     router.post("/formUpload", formFileUpload.uploadFiles);
 
     router.get("/api/states/:id",StatesData.requireData);
+
+    router.get("/api/districts/:id",DistrictsData.requireData);
 
     
   
