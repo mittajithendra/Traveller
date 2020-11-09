@@ -5,10 +5,11 @@ const formFileUpload = require('../controllers/FormController/upload');
 const placeUpload = require('../controllers/FormController/addPlace');
 const StatesData = require('../controllers/StaticApiData/apiStatesController');
 const DistrictsData = require('../controllers/StaticApiData/apidistrictsController');
+const displayAllPlaces = require('../controllers/DisplayPlaces/displayAllPlaces');
 
 let routes = app => {
   
-    router.get("/", homeController.getHome);
+    router.get("/", displayAllPlaces.getHome);
 
     router.get("/addPlace",placeUpload.addPlace);
 
