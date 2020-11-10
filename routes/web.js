@@ -6,10 +6,12 @@ const placeUpload = require('../controllers/FormController/addPlace');
 const StatesData = require('../controllers/StaticApiData/apiStatesController');
 const DistrictsData = require('../controllers/StaticApiData/apidistrictsController');
 const displayAllPlaces = require('../controllers/DisplayPlaces/displayAllPlaces');
-
+const displayIndividualPlace = require('../controllers/DisplayPlaces/displayIndividualPlace');
 let routes = app => {
   
     router.get("/", displayAllPlaces.getHome);
+
+    router.get("/displayPlace", displayIndividualPlace.getHome);
 
     router.get("/addPlace",placeUpload.addPlace);
 
