@@ -5,7 +5,7 @@ const {MongoClient} = require('mongodb');
 const uploadFiles = async (req, res) => {
   try {
     
-    const fileName = await upload(req, res);
+    const fileName = await upload(req, res); 
     console.log(req.files);
 
     if (req.files.length <= 0) {

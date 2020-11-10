@@ -2,8 +2,21 @@ const util = require("util");
 const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
 
+const storage = multer.diskStorage({
+  destination:function(req,file,cb){
+    cb(null,'public/images');
+  },
+  filename: function(req,file,cb){
+    cb(null,`${Date.now()}-jithu-${file.originalname}`);
+  }
+});
+
+
+
+
+/*
 var storage = new GridFsStorage({
-  url: "mongodb://localhost:27017/photos",
+  url: "http://localhost:3000/storingImages/",
   options: { useNewUrlParser: true, useUnifiedTopology: true },
   file: (req, file) => {
     const match = ["image/png", "image/jpeg"];
@@ -19,7 +32,7 @@ var storage = new GridFsStorage({
     };
   }
 });
-
+*/
 var uploadFiles = multer({ storage: storage }).array("multi-files", 100);
 // var uploadFiles = multer({ storage: storage }).single("file");
 var uploadFilesMiddleware = util.promisify(uploadFiles);

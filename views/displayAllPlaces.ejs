@@ -1,18 +1,79 @@
-<div class="card-columns">
+<div class="container">
+<div class="row">
 
-    <% for(var i=0; i < 0; i++) { %>
+    <% for(var i=0; i < result.length; i++) { %>
 
-
-        <option><%=  %></option>
-        <div class="card">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
+          <div class="column col-xs-4">
+              <a href="#">
+                <div class="card">
+                  <img class="img-responsive" src="<%= '/images/' + result[i].image_paths[0] %>" style="width:100%">
+                    <h3 class="place_header"><%= result[i].place_name %></h3>
+                    <small><%= result[i].state %>. <%= result[i].district %></small>
+                    
+                </div>
+              </a>
           </div>
+        
 
 
    <% } %>
 </div>
+</div>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  a{
+    text-decoration: none;
+    color: black;
+  }
+  a:hover{
+    color: rgb(85, 13, 43);
+  }
+
+  
+  
+ 
+  .row {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    padding: 0 4px;
+  }
+  
+  /* Create four equal columns that sits next to each other */
+  .column {
+    -ms-flex: 100%; /* IE10 */
+    flex: 100%;
+    max-width: 25%;
+    padding: 0 4px;
+  }
+  
+  .column img {
+    margin-top: 8px;
+    vertical-align: middle;
+    width: 100px;
+    height: 150px;
+  }
+  
+  /* Responsive layout - makes a two column-layout instead of four columns */
+  @media screen and (max-width: 800px) {
+    .column {
+      -ms-flex: 50%;
+      flex: 50%;
+      max-width: 50%;
+    }
+  }
+  
+  /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 600px) {
+    .column {
+      -ms-flex: 100%;
+      flex: 100%;
+      max-width: 50%;
+    }
+  }
+  </style>

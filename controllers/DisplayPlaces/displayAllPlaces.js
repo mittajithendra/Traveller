@@ -12,8 +12,9 @@ const home=(req,res)=>{
 
                 const image_names = [];
 
-                const result = await collection.find({country:"India" }).toArray();
+                var result = await collection.find({country:"India" }).toArray();
                 console.log(result);
+                return res.render("home",{"result":result});
             }
             finally {
                 await client.close();
@@ -24,8 +25,8 @@ const home=(req,res)=>{
 
 
 
-
-    return res.render("home");
+        
+    
 
 
 
