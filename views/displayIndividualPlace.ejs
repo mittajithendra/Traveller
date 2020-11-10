@@ -1,78 +1,31 @@
-<div class="container">
-<div class="row">
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('./head') %>
+    <style>
+      .headImagepara{
+        text-align: center;
+      }
+      .headImage{
+        margin:auto;
+        height:40vh;
+        width: 70vw;
+      }
+      .place_header , .place_details{
+        text-align: center;
+      }
+    </style>
+</head>
+<body>
+    <%- include('./navbar') %>
 
-    <% for(var i=0; i < result.length; i++) { %>
-
-          <div class="column col-xs-4">
-              <a href="<%= '/displayPlace?_id=' + result[i]._id %>" >
-                <div class="card">
-                  <img class="img-responsive" src="<%= '/images/' + result[i].image_paths[0] %>" style="width:100%">
-                    <h3 class="place_header"><%= result[i].place_name %></h3>
-                    <small><%= result[i].state %>. <%= result[i].district %></small>
-                </div>
-              </a>
-          </div>
-        
-
-
-   <% } %>
-</div>
-</div>
-
-<style>
-  * {
-    box-sizing: border-box;
-  }
-
-  a{
-    text-decoration: none;
-    color: black;
-  }
-  a:hover{
-    color: rgb(85, 13, 43);
-  }
-
-  
-  
- 
-  .row {
-    display: -ms-flexbox; /* IE10 */
-    display: flex;
-    -ms-flex-wrap: wrap; /* IE10 */
-    flex-wrap: wrap;
-    padding: 0 4px;
-  }
-  
-  /* Create four equal columns that sits next to each other */
-  .column {
-    -ms-flex: 100%; /* IE10 */
-    flex: 100%;
-    max-width: 25%;
-    padding: 0 4px;
-  }
-  
-  .column img {
-    margin-top: 8px;
-    vertical-align: middle;
-    width: 100px;
-    height: 150px;
-  }
-  
-  /* Responsive layout - makes a two column-layout instead of four columns */
-  @media screen and (max-width: 800px) {
-    .column {
-      -ms-flex: 50%;
-      flex: 50%;
-      max-width: 50%;
-    }
-  }
-  
-  /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-  @media screen and (max-width: 600px) {
-    .column {
-      -ms-flex: 100%;
-      flex: 100%;
-      max-width: 50%;
-    }
-  }
-  </style>
+    <div class="container">
+      <p class="headImagepara"><img class="img-responsive headImage" src="<%= '/images/' + result[0].image_paths[0] %>"></p>
+      <h3 class="place_header"><%= result[0].place_name %></h3>
+      <p class="place_details"><%= result[0].district %>. <%= result[0].state %>.   <%= result[0].country %></p>
+      <hr>
+      <h4>About</h4>
+      <p><%= result[0].description %></p>
+    </div>
+</body>
+</html>
