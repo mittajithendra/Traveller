@@ -20,6 +20,7 @@ let routes = app => {
 
     router.post("/formUpload", formFileUpload.uploadFiles);
 
+
     router.get("/api/states/:id",StatesData.requireData);
 
     router.get("/api/districts/:id",DistrictsData.requireData);

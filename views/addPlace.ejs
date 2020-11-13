@@ -9,6 +9,16 @@
     #editingPlaces{
       color:rgb(49, 136, 68);
     }
+    input{
+                margin:4px;
+            }
+            #delimiter{
+                text-align: center;
+                font-weight: bold;
+            }
+            .left{
+              border: 0.4px solid black;
+            }
   </style>
 
 </head>
@@ -17,7 +27,7 @@
 <%- include('./navbar'); %>
 <br>
 <div class="container">
-  <h2>Add New Place</h2>
+  <h2>Add Sub Place</h2>
   <form class="form-horizontal" action="formUpload" enctype="multipart/form-data" method="POST" novalidate>
     <div class="form-group">
       <label class="control-label col-sm-2" for="country">Country:</label>
@@ -60,7 +70,13 @@
     <div class="form-group">
         <label class="control-label col-sm-2" for="description">Description:</label>
         <div class="col-sm-10">
-            <textarea class="form-control" id="description" name="description" required></textarea>
+          <div class="left">
+            <div id="editorjs">
+                
+            </div>
+            
+          </div>
+            <input type="hidden" class="form-control" id="description" name="description"></input>
         </div>
     </div>
 
@@ -73,15 +89,29 @@
 
     <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="submit" id="submit" class="btn btn-success">Submit</button>
       </div>
     </div>
   </form>
 </div>
+<%- include('./footer.ejs') %>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script><!-- Header -->
+<script
+    src="https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest"></script><!-- Image -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script><!-- Delimiter -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script><!-- List -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script><!-- Checklist -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script><!-- Embed -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script><!-- Link -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script><!-- Marker -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script><!-- Inline Code -->
+<script src="js/main.js"></script>
 
 <script>
+
   function filterStates(){
 
     function removeAllChildNodes(parent) {
@@ -142,6 +172,13 @@ const userAction = async () => {
   userAction();
 
 }
+
+submit.addEventListener('click', function () {
+  editor.save().then((savedData) => {
+  document.getElementById('description').value=JSON.stringify(savedData);
+
+  })
+})
 </script>
 </body>
 </html>

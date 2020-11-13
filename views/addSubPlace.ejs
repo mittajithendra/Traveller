@@ -1,42 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <%- include('./head') %>
-        <style>
-            .saveButton , .place_description{
+<head>
+  
+  <%- include('./head.ejs'); %>
+  <link href="/css/home.css" rel="stylesheet" type="text/css">
+
+  <style>
+    #editingPlaces{
+      color:rgb(49, 136, 68);
+    }
+    input{
+                margin:4px;
+            }
+            #delimiter{
                 text-align: center;
+                font-weight: bold;
             }
-            .place_description{
-                padding-top:5px;
-            }
+  </style>
 
-        </style>
-    </head>
-    <body>
+</head>
+<body>
 
-        <%- include('./navbar') %>
-        <h2 class="place_description">Describe About the Place</h2>
-        <div class="container">
-            <div class="left">
-                <div id="editorjs"></div>
-                <p class="saveButton"><button class="btn btn-success" id="saveButton">SAVE</button></p>
-            </div>
+<%- include('./navbar'); %>
+<br>
+<div class="container">
+  <h2>Add Sub Place</h2>
+  <form class="form-horizontal" action="formUpload" enctype="multipart/form-data" method="POST" novalidate>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="country">Country:</label>
+      <div class="col-sm-10">
+        <select class="form-control" id="country" name="country" onchange="filterStates()" required>
+            <option value="" selected disabled>Please Select Country</option>
+            <% for(var i=0; i < countryList.length; i++) { %>
+                <option><%= countryList[i] %></option>
+           <% } %>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="state">State:</label>
+      <div class="col-sm-10">          
+        <select class="form-control" id="state" name="state" onchange="filterDistricts()" required>
+            <option selected disabled>Please Select State</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="district">District:</label>
+        <div class="col-sm-10">          
+          <select class="form-control" id="district" name="district" required>
+              <option selected disabled>Please Select District</option>
+          </select>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script><!-- Header -->
-        <script
-            src="https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest"></script><!-- Image -->
-        <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script><!-- Delimiter -->
-        <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script><!-- List -->
-        <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script><!-- Checklist -->
-        <script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script><!-- Quote -->
-        <script src="https://cdn.jsdelivr.net/npm/@editorjs/code@latest"></script><!-- Code -->
-        <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script><!-- Embed -->
-        <script src="https://cdn.jsdelivr.net/npm/@editorjs/table@latest"></script><!-- Table -->
-        <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script><!-- Link -->
-        <script src="https://cdn.jsdelivr.net/npm/@editorjs/warning@latest"></script><!-- Warning -->
-        <script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script><!-- Marker -->
-        <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script><!-- Inline Code -->
-        <script src="js/main.js"></script>
-    </body>
+    </div>
+    
+  
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="place_name">Place Name:</label>
+      <div class="col-sm-10">          
+        <input class="form-control" name="place_name" id="place_name" required></input>
+      </div>
+    </div>  
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="description">Description:</label>
+        <div class="col-sm-10">
+          <div class="left">
+            <div id="editorjs">
+                
+            </div>
+            
+          </div>
+            <input type="hidden" class="form-control" id="description" name="description"></input>
+        </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="photos">Upload Image</label>
+      <div class="col-sm-10">
+        <input type="file" name="multi-files" multiple id="input-files" class="form-control-file border"/>
+      </div>
+    </div>
+
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" id="submit" class="btn btn-success">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+<%- include('./footer.ejs') %>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script><!-- Header -->
+<script
+    src="https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest"></script><!-- Image -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script><!-- Delimiter -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script><!-- List -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script><!-- Checklist -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script><!-- Embed -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script><!-- Link -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script><!-- Marker -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script><!-- Inline Code -->
+<script src="js/main.js"></script>
+
+<script>
+
+  function filterStates(){
+
+    function removeAllChildNodes(parent) {
+      while (parent.firstChild) {
+          parent.removeChild(parent.firstChild);
+      }
+    }
+
+    var x = document.getElementById('country').value;
+    const container = document.querySelector('#state');
+    removeAllChildNodes(container);
+    
+    const userAction = async () => {
+        const response = await fetch('http://localhost:3000/api/states/'+x);
+        const myJson = await response.json();
+        console.log(myJson[0]);
+        var y =document.getElementById('state');
+        var option = document.createElement("option");
+        option.text="Please Select State";
+        y.add(option);
+        for(i=0;i<myJson.length;i++){
+          var y =document.getElementById('state');
+          var option = document.createElement("option");
+          option.text=myJson[i];
+          y.add(option);
+        }
+      }
+      userAction();
+
+  }
+
+
+
+function filterDistricts(){
+
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}
+
+var x = document.getElementById('state').value;
+x=x.replace(" ","_");
+const container = document.querySelector('#district');
+removeAllChildNodes(container);
+
+const userAction = async () => {
+    const response = await fetch('http://localhost:3000/api/districts/'+x);
+    const myJson = await response.json();
+    console.log(myJson[0]);
+    for(i=0;i<myJson.length;i++){
+      var y =document.getElementById('district');
+      var option = document.createElement("option");
+      option.text=myJson[i];
+      y.add(option);
+    }
+  }
+  userAction();
+
+}
+
+submit.addEventListener('click', function () {
+  editor.save().then((savedData) => {
+  document.getElementById('description').value=JSON.stringify(savedData);
+
+  })
+})
+</script>
+</body>
 </html>
