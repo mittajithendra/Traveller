@@ -8,6 +8,11 @@ const StatesData = require('../controllers/StaticApiData/apiStatesController');
 const DistrictsData = require('../controllers/StaticApiData/apidistrictsController');
 const displayAllPlaces = require('../controllers/DisplayPlaces/displayAllPlaces');
 const displayIndividualPlace = require('../controllers/DisplayPlaces/displayIndividualPlace');
+const BlogUpload = require('../controllers/FormController/blogUpload');
+const DisplayBlogs = require('../controllers/home/displayBlogs');
+const CreateBlog = require('../controllers/FormController/createBlog');
+
+
 let routes = app => {
   
     router.get("/", displayAllPlaces.getHome);
@@ -20,6 +25,11 @@ let routes = app => {
 
     router.post("/formUpload", formFileUpload.uploadFiles);
 
+    router.get("/createBlog",CreateBlog.getHome);
+
+    router.get("/displayBlogs",DisplayBlogs.getHome);
+
+    router.post("/blogUpload",BlogUpload.uploadFiles);
 
     router.get("/api/states/:id",StatesData.requireData);
 

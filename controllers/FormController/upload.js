@@ -9,7 +9,7 @@ const uploadFiles = async (req, res) => {
     console.log(req.files);
 
     if (req.files.length <= 0) {
-      return res.send(`You must select at least 1 file.`);
+      return res.render('failurePage',{errorName:"Select atleast one file"});
     }
     else{
         const uri = "mongodb://localhost:27017";
@@ -48,7 +48,7 @@ const uploadFiles = async (req, res) => {
         run().catch(console.dir);
     }
 
-    return res.send(`Files have been uploaded.`);
+    return res.render('successPage');
 
     // console.log(req.file);
 
@@ -61,9 +61,9 @@ const uploadFiles = async (req, res) => {
     console.log(error);
 
     if (error.code === "LIMIT_UNEXPECTED_FILE") {
-      return res.send("Too many files to upload.");
+      return res.render('failurePage',{errorName:"Too many files to upload."});
     }
-    return res.send(`Error when trying upload many files: ${error}`);
+    return res.render('failurePage',{errorName:"Error when trying upload many files"});
 
     // return res.send(`Error when trying upload image: ${error}`);
   }

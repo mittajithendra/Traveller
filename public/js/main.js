@@ -6,7 +6,7 @@ var editor = new EditorJS({
       class: Header,
       inlineToolbar: ['link'],
       config: {
-        placeholder: 'Starts here ...'
+        placeholder: 'Title'
       },
       shortcut: 'CMD+SHIFT+H'
     },
@@ -38,9 +38,6 @@ var editor = new EditorJS({
       }
 
     ]
-  },
-  onReady: function () {
-    saveButton.click() 
   },
   onChange: function () {
     console.log('something is changinggggggggg')

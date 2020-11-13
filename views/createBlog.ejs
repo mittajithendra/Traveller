@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('./head') %>
+    <style>
+
+                input{
+                    margin:4px;
+                }
+                .saveButton{
+                    float:right;
+                }
+
+                .icon{
+                    width : 25px !important;
+                    height: 25px !important;
+                }
+                .place_description{
+                    text-align: center;
+                }
+
+      </style>
+</head>
+<body>
+    <%- include('./navbar') %>
+
+    <div class="container">
+    <h2 class="place_description">Tell Your Story<p class="saveButton"><button class="btn btn-success" id="saveButton">Publish</button></p></h2>
+        
+        <div class="container">
+            <div class="left">
+                <div id="editorjs">
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script><!-- Header -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest"></script><!-- Image -->
+        <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script><!-- Delimiter -->
+        <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script><!-- List -->
+        <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script><!-- Checklist -->
+        <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script><!-- Embed -->
+        <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script><!-- Link -->
+        <script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script><!-- Marker -->
+        <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script><!-- Inline Code -->
+        <script src="js/main.js"></script>
+
+    <%- include('./footer.ejs') %>
+    
+</body>
+<script>
+    saveButton.addEventListener('click', function () {
+        editor.save().then((savedData) => {
+            console.log("clicked");
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                //document.getElementById("demo").innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("POST", "blogUpload", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send('blog='+JSON.stringify(savedData));
+        })
+    });
+</script>
+</html>

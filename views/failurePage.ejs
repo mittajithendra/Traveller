@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>
+            Traveller
+        </title>
+    </head>
+    <body>
+        <p style="color:red"><%= errorName %><br> Redirecting ...</p>
+    </body>
+    <style>
+        p{
+            padding-top: 30px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        setTimeout(()=>{
+            location.replace("http://localhost:3000/addPlace")
+        },2000);
+    </script>
+</html>
