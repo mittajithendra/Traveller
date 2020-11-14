@@ -1,21 +1,16 @@
 <div class="container">
 <div class="row">
-
     <% for(var i=0; i < result.length; i++) { %>
 
           <div class="column col-xs-4">
               <a href="<%= '/displayPlace?_id=' + result[i]._id %>" >
                 <div class="card">
-                  <img class="img-responsive" src="<%= '/images/' + result[i].image_paths[0] %>" style="width:100%">
+                  <img class="img-responsive" loading="lazy" src="<%= '/images/' + result[i].image_paths[0] %>" style="width:100%">
                     <h3 class="place_header"><%= result[i].place_name %></h3>
                     <small><%= result[i].state %>. <%= result[i].district %></small>
                 </div>
               </a>
-          </div> 
-        
-
-
-          
+          </div>   
    <% } %>
 </div>
 

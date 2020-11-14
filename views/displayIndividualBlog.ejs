@@ -1,65 +1,40 @@
-const saveButton = document.getElementById('saveButton')
-var editor = new EditorJS({
-  holderID: 'editorjs',
-  tools: {
-    header: {
-      class: Header,
-      inlineToolbar: ['link'],
-      config: {
-        placeholder: 'Title'
-      },
-      shortcut: 'CMD+SHIFT+H'
-    },
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('./head') %>
+    <style>
+        button{
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <%- include('./navbar') %>
 
-    list: {
-      class: List,
-      inlineToolbar: true,
-      shortcut: 'CMD+SHIFT+L'
-    },
-    checklist: {
-      class: Checklist,
-      inlineToolbar: true
-    },
-    marker: {
-      class: Marker,
-      shortcut: 'CMD+SHIFT+M'
-    },
-    delimiter: Delimiter,
-    inlineCode: {
-      class: InlineCode,
-      shortcut: 'CMD+SHIFT+C'
-    },
-    embed: Embed,
-},
-  data: {
-    blocks: [
-      {
-        type: 'header'
-      }
+    
 
-    ]
-  },
-  onChange: function () {
-    console.log('something is changinggggggggg')
-  }
-})
-/*
-saveButton.addEventListener('click', function () {
-  editor.save().then((savedData) => {
+   <form action="http://localhost:3000/createBlog"><button class="btn btn-success">Create Blog</button></form>
+   <br>
+   <hr>
+   <input type="hidden" id="descript" value="<%= result %>">
+   <div class="container" id='output'>
 
-    var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      //document.getElementById("demo").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("POST", "descriptionUpload", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send('description='+JSON.stringify(savedData));
+   </div>
+    <%- include('./footer.ejs') %>
+    
+</body>
+<script>
+    var savedTotalData = document.getElementById('descript').value;
 
-    var output = document.getElementById('output')
-    var createNode = document.createElement('div')
-    console.log(Object.keys(savedData.blocks).length)
+  console.log(savedTotalData);
+  savedTotalData=JSON.parse(savedTotalData);
+  console.log(savedTotalData);
+for(blog_id=0;blog_id<savedTotalData.length;blog_id++){
+    savedData = JSON.parse(savedTotalData[blog_id].description);
+    console.log(savedData);
+  var output = document.getElementById('output')
+    var createNode = document.createElement('div');
+    console.log(Object.keys(savedData.blocks).length);
     console.log(typeof savedData);
     for (i = 0;i < Object.keys(savedData.blocks).length;i++) {
       const type_of_text = savedData.blocks[i].type;
@@ -143,8 +118,10 @@ saveButton.addEventListener('click', function () {
       }
     }
 
-    output.appendChild(createNode)
-  })
-})
-
-*/
+    output.appendChild(createNode);
+    var hr = document.createElement('hr');
+    output.appendChild(hr);
+    
+}
+</script>
+</html>

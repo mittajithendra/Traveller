@@ -16,7 +16,7 @@ const home=(req,res)=>{
                 var o_id = new ObjectId(parameter);
                 var result = await collection.find({_id:o_id}).toArray();
                 console.log(result);
-                return res.render("displayIndividualPlace",{"result":result});
+                return res.render("displayIndividualBlog",{"result":JSON.stringify(result)});
             }
             finally {
                 await client.close();

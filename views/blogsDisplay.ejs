@@ -11,9 +11,123 @@
 <body>
     <%- include('./navbar') %>
 
+    
+
    <form action="createBlog"><button class="btn btn-success">Create Blog</button></form>
+   <br>
+   <hr>
+   <input type="hidden" id="descript" value="<%= result %>">
+   <div class="container" id='output'>
+
+   </div>
     <%- include('./footer.ejs') %>
     
 </body>
+<script>
+    var savedTotalData = document.getElementById('descript').value;
 
+  console.log(savedTotalData);
+  savedTotalData=JSON.parse(savedTotalData);
+  console.log(savedTotalData);
+for(blog_id=0;blog_id<savedTotalData.length;blog_id++){
+    savedData = JSON.parse(savedTotalData[blog_id].description);
+    console.log(savedData);
+  var output = document.getElementById('output')
+    var createNode = document.createElement('div');
+    console.log(Object.keys(savedData.blocks).length);
+    console.log(typeof savedData);
+    for (i = 0;i < Object.keys(savedData.blocks).length;i++) {
+      if(i==2){
+        break;
+      }
+      const type_of_text = savedData.blocks[i].type;
+      if(type_of_text == 'header'){
+        if(savedData.blocks[i].data.level== 1){
+          const createChildNode = document.createElement('h1');
+          createChildNode.innerHTML = savedData.blocks[i].data.text;
+          createNode.appendChild(createChildNode);
+        }
+        else if(savedData.blocks[i].data.level== 2){
+          const anchorNode = document.createElement('a');
+          anchorNode.href= 'http://localhost:3000/displayIndividualBlog/id='+savedTotalData[blog_id]._id;
+          const createChildNode = document.createElement('h2');
+          createChildNode.innerHTML = savedData.blocks[i].data.text;
+          anchorNode.appendChild(createChildNode);
+          createNode.appendChild(anchorNode);
+        }
+        else if(savedData.blocks[i].data.level== 3){
+          const createChildNode = document.createElement('h3');
+          createChildNode.innerHTML = savedData.blocks[i].data.text;
+          createNode.appendChild(createChildNode);
+        }
+        else if(savedData.blocks[i].data.level== 4){
+          const createChildNode = document.createElement('h4');
+          createChildNode.innerHTML = savedData.blocks[i].data.text;
+          createNode.appendChild(createChildNode);
+        }
+        else if(savedData.blocks[i].data.level== 5){
+          const createChildNode = document.createElement('h5');
+          createChildNode.innerHTML = savedData.blocks[i].data.text;
+          createNode.appendChild(createChildNode);
+        }
+        else if(savedData.blocks[i].data.level== 6){
+          const createChildNode = document.createElement('h6');
+          createChildNode.innerHTML = savedData.blocks[i].data.text;
+          createNode.appendChild(createChildNode);
+        }
+        
+      }
+      else if(type_of_text == 'checklist'){
+        for(j=0;j<savedData.blocks[i].data.items.length;j++){
+          var checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.id = savedData.blocks[i].data.items[j].text;
+          checkbox.name = savedData.blocks[i].data.items[j].text;
+          checkbox.value = savedData.blocks[i].data.items[j].text;
+          checkbox.checked = savedData.blocks[i].data.items[j].checked;
+
+          var label = document.createElement('label')
+          label.htmlFor = savedData.blocks[i].data.items[j].text;
+          label.appendChild(document.createTextNode(savedData.blocks[i].data.items[j].text));
+          
+          var br = document.createElement('br');
+          createNode.appendChild(checkbox);
+          createNode.appendChild(label);
+          createNode.appendChild(br);
+          
+        }
+          
+      }
+
+      else if(type_of_text == 'delimiter'){
+        var delimiter = document.createElement('h3');
+        delimiter.id = 'delimiter';
+        delimiter.appendChild(document.createTextNode('* * *'));
+        createNode.appendChild(delimiter); 
+      }
+      else if(type_of_text == 'list'){
+        if(savedData.blocks[i].data.style == 'ordered'){
+          var orderedlist = document.createElement('ol');
+          for(j=0;j<savedData.blocks[i].data.items.length;j++){
+              var list = document.createElement('li');
+              list.innerHTML = savedData.blocks[i].data.items[j];
+              orderedlist.appendChild(list);
+          }
+          createNode.appendChild(orderedlist);
+        }
+      }
+      else if(type_of_text == 'paragraph'){
+        var paragraph = document.createElement('p');
+        paragraph.innerHTML = savedData.blocks[i].data.text;
+
+        createNode.appendChild(paragraph);
+      }
+    }
+
+    output.appendChild(createNode);
+    var hr = document.createElement('hr');
+    output.appendChild(hr);
+    
+}
+</script>
 </html>

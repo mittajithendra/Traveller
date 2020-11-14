@@ -11,6 +11,7 @@ const displayIndividualPlace = require('../controllers/DisplayPlaces/displayIndi
 const BlogUpload = require('../controllers/FormController/blogUpload');
 const DisplayBlogs = require('../controllers/home/displayBlogs');
 const CreateBlog = require('../controllers/FormController/createBlog');
+const DisplayIndividualBlog = require('../controllers/Blogs/displayIndividualBlogs');
 
 
 let routes = app => {
@@ -34,6 +35,8 @@ let routes = app => {
     router.get("/api/states/:id",StatesData.requireData);
 
     router.get("/api/districts/:id",DistrictsData.requireData);
+
+    router.get('/displayIndividualBlog/:id',DisplayIndividualBlog.getHome);
 
     
 

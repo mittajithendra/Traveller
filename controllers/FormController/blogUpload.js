@@ -14,7 +14,8 @@ const uploadFiles = async (req, res) => {
                 const data = {
                     description : req.body.blog
                 }
-
+                console.log(req.body.blog);
+                console.log(data);
                 const result = await collection.insertOne(data);
                 console.log(
                     `${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`,

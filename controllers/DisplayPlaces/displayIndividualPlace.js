@@ -13,8 +13,6 @@ const home=(req,res)=>{
 
                 const database = client.db('traveller');
                 const collection = database.collection('places_list');
-
-                const image_names = [];
                 var o_id = new ObjectId(parameter);
                 var result = await collection.find({_id:o_id}).toArray();
                 console.log(result);
