@@ -2,9 +2,6 @@ const express = require('express');
 const routes= require('./routes/web');
 const bodyParser = require('body-parser');
 const app = express();
-var allowedOrigins = [origionDomain] 
-res.header('Access-Control-Allow-Origin', allowedOrigins)
-
 
 app.set('views', './views');
 app.set("view engine", "ejs");
